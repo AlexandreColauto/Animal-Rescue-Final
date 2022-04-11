@@ -2,42 +2,37 @@ import type { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
+
 const Home: NextPage = () => {
   return (
     <div className="bg-secondary pb-16">
-      <div className="flex p-10 justify-between h-10/12 items-center leading-loose ">
+      <div className="flex px-16 justify-between h-10/12 items-center leading-loose ">
         <div>
           <p className="text-7xl font-bold ">
-            This is the template <br />
-            of our <span className="text-white">NFT Marketplace</span>
+            Collect, Sell or <br />
+            Create <span className="text-white">Cat NFTs</span>
           </p>
           <p className="text-[#2c5878] mt-8 font-thin text-lg">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry&apos;s standard
+            A marketplace for cat lovers that raises funds for rescues and makes{" "}
             <br />
-            dummy text ever since the 1500s, when an unknown printer
-            <br />
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industrys standard
-            <br /> dummy text ever since the 1500s, when an unknown printer
-            <br />
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry&apos;s standard
+            the world a <em>meower</em> place. Oh, and get a free NFT when you
+            make a <br />
+            donation (tax deductible) of $50 or more to your favourite rescue.
             <br />
           </p>
           <div className="mt-10">
-            <Link href="/explore">
+            <Link href="/create">
               <button className="bg-primary text-white py-2 px-8 font-bold rounded-2xl hover:bg-normal">
-                Explore Collections
+                Create Collections
               </button>
             </Link>
             <button className="text-primary  py-2 px-8 font-bold rounded-2xl hover:text-white">
-              Info/About
+              Why this matters
             </button>
           </div>
         </div>
-        <div>
-          <Image src="/logo.png" alt="logo" width="380" height="380" />
+        <div className="mr-20 mt-10">
+          <Image src="/logo.png" alt="logo" width="550" height="550" />
         </div>
       </div>
     </div>

@@ -48,45 +48,45 @@ const CreateCollection = () => {
   };
 
   return (
-    <div>
+    <div className="mt-10">
       <Processing isOpen={processing} />
       {isSuccess && <ToastSucess isOpen={isSuccess} toggle={setisSuccess} />}
       {isError && <ToastError isOpen={true} toggle={setisError} />}
-      <div className="mx-auto mt-10 w-11/12 bg-slate-100 rounded-xl">
-        <div className="p-8 pl-14">
-          <p className="text-2xl font-bold my-4">Create New Collection</p>
-          <label className="label">Collection Name</label>
-          <div className="">
-            <input
-              className="rounded pl-1"
-              type="text"
-              placeholder="Crypto something..."
-              onChange={(e) =>
-                updateFormInput({ ...formInput, name: e.target.value })
-              }
-            />
-          </div>
-          <div className="mt-4">
-            <label className="">Description</label>
+      <div className="mx-auto mt- w-1/2 bg-gray-200 py-4 rounded-xl">
+        <div className="p-8 pl-14 text-center">
+          <p className="text-5xl font-bold my-5 ">Create New Collection</p>
+          <div className="mt-10">
+            <label className="mt-12 text-2xl label">Collection Name</label>
             <div className="">
               <input
-                className="pl-1 rounded"
-                placeholder="Cute kitten"
+                className="rounded mt-3 pl-1 bg-inherit border-b-2 border-b-white"
+                type="text"
                 onChange={(e) =>
-                  updateFormInput({
-                    ...formInput,
-                    description: e.target.value,
-                  })
+                  updateFormInput({ ...formInput, name: e.target.value })
                 }
-              ></input>
+              />
             </div>
+            <div className="mt-12 text-2xl">
+              <label className="">Description</label>
+              <div className="">
+                <input
+                  className="rounded mt-3 pl-1 bg-inherit border-b-2 border-b-white"
+                  onChange={(e) =>
+                    updateFormInput({
+                      ...formInput,
+                      description: e.target.value,
+                    })
+                  }
+                ></input>
+              </div>
+            </div>
+            <button
+              className="mt-10 bg-primary text-white rounded-lg text-2xl p-4 hover:drop-shadow"
+              onClick={submitCollection}
+            >
+              Create
+            </button>
           </div>
-          <button
-            className="mt-4 bg-slate-200 rounded-lg p-2 hover:drop-shadow"
-            onClick={submitCollection}
-          >
-            Create
-          </button>
         </div>
       </div>
     </div>

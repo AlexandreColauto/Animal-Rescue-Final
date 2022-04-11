@@ -9,8 +9,8 @@ function Create() {
     console.log(collection);
   }, [collection]);
   return (
-    <div className="w-full mt-6 pb-24">
-      <div className="justify-items-center items-center flex flex-col">
+    <div className="w-full pb-24">
+      <div className="justify-items-center content-center mx-auto mb-3 text-center ">
         <p className="text-6xl font-bold">Create a New</p>
         <p className="text-6xl font-bold">Collection or Item</p>
       </div>

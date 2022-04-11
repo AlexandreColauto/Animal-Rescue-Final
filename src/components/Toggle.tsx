@@ -18,16 +18,14 @@ export default function CustomLabelExample(props: callback) {
         <Switch
           checked={enabled}
           onChange={setEnabled}
-          className={`${
-            enabled ? "bg-[#63add7]" : "bg-[#63add7]"
-          } relative inline-flex items-center  h-14 rounded-full w-[150px] transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
+          className={`${enabled ? "bg-[#63add7]" : "bg-[#63add7]"
+            } relative inline-flex items-center  h-14 rounded-full w-[150px] transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
         >
           <span
-            className={`${
-              enabled
+            className={`${enabled
                 ? "translate-x-[5.6rem] w-[3.6rem]"
                 : "translate-x-1 w-[5.6rem]"
-            } inline-block  h-12 transform bg-white rounded-full transition-transform`}
+              } inline-block  h-12 transform bg-white rounded-full transition-transform`}
           />
           <div className="absolute w-full">
             <div className="flex justify-center">
@@ -40,7 +38,7 @@ export default function CustomLabelExample(props: callback) {
                 className={`${enabled ? "text-[#708496]" : "text-white"} mr-1`}
               >
                 {" "}
-                NFT{" "}
+                Item{" "}
               </p>
             </div>
           </div>

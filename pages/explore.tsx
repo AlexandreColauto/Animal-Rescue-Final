@@ -108,12 +108,12 @@ function Explore() {
 
   return (
     <div className="pb-16">
-      <p className="text-6xl  font-bold text-center py-14">
+      <p className="text-6xl font-bold text-center pb-14">
         Explore Collections
       </p>
       <div className="flex mt-4 bg-black w-8/12 mb-8 mx-auto border border-secondary rounded overflow-hidden">
-        <span className="text-sm text-white  px-4 py-2 bg-secondary whitespace-no-wrap">
-          Collection:
+        <span className="text-sm text-white px-4 py-2 bg-secondary whitespace-no-wrap">
+          Search:
         </span>
         <select
           className=" py-2 w-full  bg-white"
@@ -121,7 +121,7 @@ function Explore() {
             picklistChange(e);
           }}
         >
-          <option>All Collections</option>
+          <option>Cat Rescue NFTs</option>
           {collectionList.map((collection, i) => (
             <option key={i} value={collection.get("collectionAddress")}>
               {collection.get("name")}

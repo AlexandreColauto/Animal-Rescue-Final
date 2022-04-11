@@ -96,11 +96,11 @@ const Mint = () => {
   };
 
   return (
-    <div>
-      <div className="mx-auto mt-10 w-11/12 bg-slate-100 rounded-xl">
-        <div className="p-8 pl-14">
-          <p className="text-2xl font-bold my-4">Create New NFT</p>
-          <div className="w-min">
+    <div className="mt-10">
+      <div className="mx-auto mt- w-1/2 bg-gray-200 py-4 rounded-xl">
+        <div className="p-8 pl-14 text-center">
+          <p className="text-5xl font-bold my-5">Create New Item</p>
+          <div className="mt-10">
             <label className="file-label">
               <input
                 className="hidden"
@@ -109,8 +109,8 @@ const Mint = () => {
                 onChange={onChange}
               />
               <div
-                className={`w-[350px] h-[350px] overflow-hidden grid place-content-center hover:drop-shadow-md ml-0 cursor-pointer rounded-xl ${
-                  imgUrl ? "" : "border  border-2 border-dashed"
+                className={`w-[350px] mx-auto h-[350px] overflow-hidden grid place-content-center hover:drop-shadow-md cursor-pointer rounded-xl ${
+                  imgUrl ? "" : "border-primary border-2 border-dashed"
                 } `}
               >
                 {imgUrl ? (
@@ -124,25 +124,23 @@ const Mint = () => {
               </div>
             </label>
           </div>
-          <div className="mt-6 flex items-center">
-            <label className="">NFT Name</label>
+          <div className=" mt-12 items-center">
+            <label className=" text-2xl label">NFT Name</label>
             <div className="">
               <input
-                className="rounded p-1 ml-2"
+                className="rounded mt-3 pl-1 bg-inherit border-b-2 border-b-white"
                 type="text"
-                placeholder="Crypto something..."
                 onChange={(e) =>
                   updateFormInput({ ...formInput, name: e.target.value })
                 }
               />
             </div>
           </div>
-          <div className="mt-4 flex items-center">
+          <div className="mt-12 text-2xl">
             <label className="">Description</label>
             <div className="">
               <input
-                className="p-1 rounded ml-2"
-                placeholder="Cute kitten"
+                className="rounded mt-3 pl-1 bg-inherit border-b-2 border-b-white"
                 onChange={(e) =>
                   updateFormInput({
                     ...formInput,
@@ -152,9 +150,9 @@ const Mint = () => {
               ></input>
             </div>
           </div>
-          <div className="mt-4 flex w-full ">
+          <div className="mt-12 text-2xl">
             <label className="pt-1">Collection</label>
-            <div className="w-full ml-4">
+            <div className="w-full mt-5">
               {!!collectionList.length && (
                 <div>
                   <div className="select rounded">
@@ -176,7 +174,7 @@ const Mint = () => {
                   <div className="field is-grouped">
                     <div className="control">
                       <button
-                        className="mt-4 bg-slate-200 rounded-lg p-2 px-6  hover:drop-shadow"
+                        className="mt-4 bg-primary text-white rounded-lg p-2 px-6  hover:drop-shadow"
                         onClick={executeMint}
                       >
                         Mint

@@ -37,48 +37,48 @@ const Header: NextPage = () => {
   return (
     <div>
       <nav
-        className="flex px-10 py-7 drop-shadow items-center"
+        className="fix px-10 py-7 w-full float-right items-center"
         role="navigation"
         aria-label="main navigation"
-        style={{ boxShadow: "0px 15px 30px rgba(62, 19, 77, 0.09)" }}
+
       >
-        <div className=" mr-10"></div>
-        <div className="">
-          <Link href="/">
-            <p className="text-3xl font-black cursor-pointer">
-              Bitcoin For Cats.
-            </p>
-          </Link>
-        </div>
-        <div className="ml-auto">
-          <Link href="/explore">
-            <p className="mx-6 mt-1 font-bold cursor-pointer hover:drop-shadow hover:scale-105">
-              Explore
-            </p>
-          </Link>
-        </div>
-        <Link href="/create">
-          <p className="mx-6 mt-1 font-bold cursor-pointer hover:drop-shadow hover:scale-105">
-            Create
-          </p>
-        </Link>
-        <button
-          className="mx-6 mt-1 cursor-pointer hover:drop-shadow hover:scale-105"
-          onClick={login}
-        >
-          <span className="w-25">
-            <FontAwesomeIcon icon={faWallet} className="w-6 h-6" />
-          </span>
-        </button>
-        <Link href="/creatorsdashboard">
-          <div className="mx-6 cursor-pointer hover:drop-shadow hover:scale-105">
-            <span className="icon">
-              <FontAwesomeIcon icon={faCat} className="w-7 h-7" />
-            </span>
+        <div id="general_menu" className=" float-right align-middle mb-3 ">
+          <div className="text-md flex items-center lg:flex-grow">
+          <a href="/explore" className="block lg:inline-block  text-primary bg-white p-2 rounded-md mr-4 hover:drop-shadow hover:scale-105">
+              <Link href="/explore">
+                <p className="mx-6 font-bold cursor-pointer ">
+                  Explore
+                </p>
+              </Link>
+            </a>
+            <a href="/create" className="block lg:inline-block text-primary bg-white p-2 rounded-md mr-4 hover:drop-shadow hover:scale-105">
+              <Link href="/create">
+                <p className="mx-6 font-bold cursor-pointer ">
+                  Create
+                </p>
+              </Link>
+            </a>
+            <a href="#responsive-header" className="block lg:inline-block text-primary">
+              <button
+                className="mx-6 cursor-pointer hover:drop-shadow hover:scale-105"
+                onClick={login}
+              >
+                <span className="w-25">
+                  <FontAwesomeIcon icon={faWallet} className="w-8 h-8 bg-white p-2 rounded-md" />
+                </span>
+              </button>
+            </a>
+            <a href="#responsive-header" className="block lg:inline-block  text-primary">
+              <Link href="/creatorsdashboard">
+                <div className="mx-6 cursor-pointer hover:drop-shadow hover:scale-105">
+                  <span className="icon">
+                    <FontAwesomeIcon icon={faCat} className="w-8 h-8 bg-white p-2 rounded-md" />
+                  </span>
+                </div>
+              </Link>
+            </a>
           </div>
-        </Link>
-        <div className=" ml-2"></div>
-        <div></div>
+        </div>
       </nav>
     </div>
   );
