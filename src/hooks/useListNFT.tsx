@@ -6,6 +6,7 @@ type props = {
   id: string;
   nftPrice: string;
   callback: () => void;
+  errCallback: () => void;
 };
 
 const ListNFT = () => {
@@ -16,50 +17,54 @@ const ListNFT = () => {
     const userAddress = await Moralis.account;
     if (!marketAddress || !userAddress) return;
 
-    const { collectionAddr, id, nftPrice, callback } = props;
-
-    const isApprvd = {
-      contractAddress: collectionAddr,
-      functionName: "isApprovedForAll",
-      abi: NFT.abi,
-      params: {
-        account: userAddress,
-        operator: marketAddress,
-      },
-    };
-
-    const isApproved = await Moralis.executeFunction(isApprvd);
-    if (!isApproved) {
-      const setApproval = {
+    const { collectionAddr, id, nftPrice, callback, errCallback } = props;
+    try {
+      const isApprvd = {
         contractAddress: collectionAddr,
-        functionName: "setApprovalForAll",
+        functionName: "isApprovedForAll",
         abi: NFT.abi,
         params: {
+          account: userAddress,
           operator: marketAddress,
-          approved: true,
         },
       };
-      const approveTransaction: any = await Moralis.executeFunction(
-        setApproval
-      );
-      await approveTransaction.wait();
+
+      const isApproved = await Moralis.executeFunction(isApprvd);
+      if (!isApproved) {
+        const setApproval = {
+          contractAddress: collectionAddr,
+          functionName: "setApprovalForAll",
+          abi: NFT.abi,
+          params: {
+            operator: marketAddress,
+            approved: true,
+          },
+        };
+        const approveTransaction: any = await Moralis.executeFunction(
+          setApproval
+        );
+        await approveTransaction.wait();
+      }
+
+      const listItem = {
+        contractAddress: marketAddress,
+        functionName: "ListNFT",
+        abi: NFTMarket.abi,
+        params: {
+          NFTaddress: collectionAddr,
+          collectionAddress: collectionAddr,
+          id: id,
+          price: Moralis.Units.ETH(nftPrice.toString()),
+        },
+      };
+      const listTransaction: any = await Moralis.executeFunction(listItem);
+      await listTransaction.wait();
+
+      callback();
+    } catch (err) {
+      console.log(err);
+      errCallback();
     }
-
-    const listItem = {
-      contractAddress: marketAddress,
-      functionName: "ListNFT",
-      abi: NFTMarket.abi,
-      params: {
-        NFTaddress: collectionAddr,
-        collectionAddress: collectionAddr,
-        id: id,
-        price: Moralis.Units.ETH(nftPrice),
-      },
-    };
-    const listTransaction: any = await Moralis.executeFunction(listItem);
-    await listTransaction.wait();
-
-    callback();
   };
 
   return list;

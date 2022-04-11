@@ -7,8 +7,7 @@ interface props {
   name: string;
   description?: string;
   imgUrl?: string | null;
-  setModalValue: (arg: string) => void;
-  success: () => void;
+  callback: () => void;
   address: string;
   collectionName: string;
 }
@@ -19,22 +18,13 @@ function useCreateCollection(): [uploadFile, create] {
   const mint: create = async (props) => {
     const ethers = Moralis.web3Library;
 
-    const {
-      name,
-      description,
-      imgUrl,
-      setModalValue,
-      success,
-      address,
-      collectionName,
-    } = props;
+    const { name, description, imgUrl, callback, address, collectionName } =
+      props;
     console.log(props);
     if (!name || !imgUrl) {
       alert("Fill the required Information before minting.");
       return false;
     }
-
-    setModalValue("is-active");
 
     const currentId = {
       contractAddress: address,
@@ -57,30 +47,33 @@ function useCreateCollection(): [uploadFile, create] {
         reciever: Moralis.account,
       },
     };
+    try {
+      const tokenHash: any = await Moralis.executeFunction(mint);
 
-    const tokenHash: any = await Moralis.executeFunction(mint);
-    console.log(mint);
-    await tokenHash.wait();
-
-    const s3Bucket = "kittie-kat-rescue"; // replace with your bucket name
-    const objectType = "application/json"; // type of file
-    const data = JSON.stringify({ name, description, image: imgUrl });
-    const tokenIdString = tokenId.toString().padStart(64, "0");
-    // setup params for putObject
-    const params = {
-      Bucket: s3Bucket,
-      ACL: "public-read",
-      Key: collectionName + "/" + tokenIdString + ".json",
-      Body: data,
-    };
-    console.log(s3);
-    const result = s3.putObject(params, (err) => {
+      if (tokenHash) {
+        const s3Bucket = "kittie-kat-rescue"; // replace with your bucket name
+        const objectType = "application/json"; // type of file
+        const data = JSON.stringify({ name, description, image: imgUrl });
+        const tokenIdString = tokenId.toString().padStart(64, "0");
+        // setup params for putObject
+        const params = {
+          Bucket: s3Bucket,
+          ACL: "public-read",
+          Key: collectionName + "/" + tokenIdString + ".json",
+          Body: data,
+        };
+        const result = s3.putObject(params, (err) => {
+          console.log(err);
+        });
+        console.log(result);
+      }
+      await tokenHash.wait();
+      callback();
+      return true;
+    } catch (err) {
       console.log(err);
-    });
-
-    setModalValue("");
-    success();
-    return true;
+      return false;
+    }
   };
 
   const saveFile: uploadFile = async (e) => {

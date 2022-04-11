@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 const Moralis = require("moralis");
-import { useRouter } from "next/router";
 import { useMoralis } from "react-moralis";
 import { NextPage } from "next";
-const ROUTE_POST_ID = "/explorer/[id]";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWallet, faCat } from "@fortawesome/free-solid-svg-icons";
 
 const Header: NextPage = () => {
   const marketAddress = "0x47bB10F98034Ba0b06037601106b0793972816BD";
@@ -22,10 +22,11 @@ const Header: NextPage = () => {
   }, []);
 
   const tryWeb3 = () => {
-    !isWeb3Enabled ? enableWeb3() : null;
+    !isWeb3Enabled && !isAuthenticated ? enableWeb3() : null;
   };
   async function login() {
     console.log(isAuthenticated);
+    tryWeb3();
     if (!user) {
       const user = await authenticate({
         signingMessage: "Log in using Moralis",
@@ -36,65 +37,48 @@ const Header: NextPage = () => {
   return (
     <div>
       <nav
-        className="navbar"
+        className="flex px-10 py-7 drop-shadow items-center"
         role="navigation"
         aria-label="main navigation"
         style={{ boxShadow: "0px 15px 30px rgba(62, 19, 77, 0.09)" }}
       >
-        <div className="navbar-brand">
+        <div className=" mr-10"></div>
+        <div className="">
           <Link href="/">
-            <a className="navbar-item">Logo</a>
+            <p className="text-3xl font-black cursor-pointer">
+              Bitcoin For Cats.
+            </p>
           </Link>
-          <a
-            role="button"
-            className="navbar-burger"
-            aria-label="menu"
-            aria-expanded="false"
-            data-target="navbarBasicExample"
-          >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
         </div>
-
-        <div id="navbarBasicExample" className="navbar-menu">
-          <div className="navbar-end">
-            <div className="navbar-item">
-              <Link href="/createcollection">
-                <div className="button is-white">Create Collection</div>
-              </Link>
-            </div>
-            <div className="navbar-item">
-              <Link href="/mint">
-                <div className="button is-white">Mint</div>
-              </Link>
-            </div>
-            <div className="navbar-item">
-              <Link href="/explore">
-                <div className="button is-white">Explore</div>
-              </Link>
-            </div>
-            <div className="navbar-item">
-              <Link href="/creatorsdashboard">
-                <div className="button is-white ">
-                  <span className="icon">
-                    Dashboard
-                    <i className="fas fa-user" />
-                  </span>
-                </div>
-              </Link>
-            </div>
-            <div className="navbar-item">
-              <button className="button is-white" onClick={login}>
-                <span className="icon">
-                  <i className="fas fa-wallet" />
-                </span>
-                Login
-              </button>
-            </div>
+        <div className="ml-auto">
+          <Link href="/explore">
+            <p className="mx-6 mt-1 font-bold cursor-pointer hover:drop-shadow hover:scale-105">
+              Explore
+            </p>
+          </Link>
+        </div>
+        <Link href="/create">
+          <p className="mx-6 mt-1 font-bold cursor-pointer hover:drop-shadow hover:scale-105">
+            Create
+          </p>
+        </Link>
+        <button
+          className="mx-6 mt-1 cursor-pointer hover:drop-shadow hover:scale-105"
+          onClick={login}
+        >
+          <span className="w-25">
+            <FontAwesomeIcon icon={faWallet} className="w-6 h-6" />
+          </span>
+        </button>
+        <Link href="/creatorsdashboard">
+          <div className="mx-6 cursor-pointer hover:drop-shadow hover:scale-105">
+            <span className="icon">
+              <FontAwesomeIcon icon={faCat} className="w-7 h-7" />
+            </span>
           </div>
-        </div>
+        </Link>
+        <div className=" ml-2"></div>
+        <div></div>
       </nav>
     </div>
   );

@@ -17,28 +17,33 @@ interface metadata {
   description: string;
   id: string;
   image: string;
-  marketId: number;
+  marketId?: number;
   name: string;
-  price: string;
-  collectionAddress: string;
+  price?: string;
+  address: string;
 }
 
 type fetchItems = (
   collectionAddress?: string | undefined
 ) => Promise<[marketItms[], metadata[]] | undefined>;
+
 type filterNFTs = (
   collectionAddr: string,
   collections: marketItms[],
   metadata: metadata[]
 ) => [marketItms[], metadata[]];
 
-const useFetchMarket = (): [fetchItems, filterNFTs] => {
-  const { Moralis, isWeb3Enabled, isWeb3EnableLoading } = useMoralis();
+interface dictionary {
+  [key: string]: string;
+}
 
-  const fetchItems = async (
-    collectionAddress?: string
-  ): Promise<[marketItms[], metadata[]] | undefined> => {
-    console.log(isWeb3EnableLoading + "" + isWeb3Enabled);
+const useFetchMarket = (): [fetchItems, filterNFTs] => {
+  const { Moralis, isWeb3Enabled, isWeb3EnableLoading, web3 } = useMoralis();
+
+  const fetchItems = async (): Promise<
+    [marketItms[], metadata[]] | undefined
+  > => {
+    console.log(isWeb3EnableLoading + " " + isWeb3Enabled);
     if (!isWeb3Enabled) return;
     const marketAddress = process.env.NEXT_PUBLIC_NFT_MARKET_ADDRESS;
     const userAddress = await Moralis.account;
@@ -49,34 +54,57 @@ const useFetchMarket = (): [fetchItems, filterNFTs] => {
       functionName: "fetchAllCollection",
       abi: NFTMarket.abi,
     };
-    const marketItms: any = await Moralis.executeFunction(fetchItems);
-    const nftsMeta = await setNFTMetadata(marketItms);
-    return [marketItms, nftsMeta];
+    try {
+      const marketItms: any = await Moralis.executeFunction(fetchItems);
+      const collectionsURI = await getCollectionURI(marketItms);
+      const nftsMeta = await setNFTMetadata(marketItms, collectionsURI);
+      return [marketItms, nftsMeta];
+    } catch (err) {
+      console.log(err);
+      return;
+    }
   };
 
-  async function setNFTMetadata(nftsMeta: marketItms[]) {
+  async function setNFTMetadata(
+    nftsMeta: marketItms[],
+    collectionsURI: dictionary
+  ) {
     return await Promise.all(
       nftsMeta.map(async (nft) => {
-        const getURI = {
-          contractAddress: nft.nftAddress,
-          functionName: "uri",
-          abi: NFT.abi,
-          params: { "": nft.tokenId },
-        };
-
-        const markeet: any = await Moralis.executeFunction(getURI);
+        const nftURI = collectionsURI[nft.collectionAddress];
         const tokenIdString = nft.tokenId.toString().padStart(64, "0");
-        const uri = markeet.replace("{id}", tokenIdString);
+        const uri = nftURI?.replace("{id}", tokenIdString);
         const _metadata = await axios.get(uri);
         const metadata: metadata = _metadata.data;
         metadata.id = nft.tokenId;
         metadata.price = Moralis.Units.FromWei(nft.price);
         metadata.marketId = parseInt(nft.itemId);
-        metadata.collectionAddress = nft.nftAddress;
+        metadata.address = nft.collectionAddress;
         return metadata;
       })
     );
   }
+
+  const getCollectionURI = async (marketItms: marketItms[]) => {
+    const CollectionURIDictionary: dictionary = {};
+    await Promise.all(
+      marketItms.map(async (item) => {
+        if (!CollectionURIDictionary[item.collectionAddress]) {
+          const ethers = Moralis.web3Library;
+          console.log(web3);
+          if (!web3) return;
+          const nftContract = new ethers.Contract(
+            item.collectionAddress,
+            NFT.abi,
+            web3
+          );
+          const uri = await nftContract.uri(item.tokenId);
+          CollectionURIDictionary[item.collectionAddress] = uri;
+        }
+      })
+    );
+    return CollectionURIDictionary;
+  };
 
   const filterNFTs: filterNFTs = (
     collectionAddr: string,
@@ -87,7 +115,7 @@ const useFetchMarket = (): [fetchItems, filterNFTs] => {
       return item.collectionAddress === collectionAddr;
     });
     const _metadata = metadata.filter((item) => {
-      return item.collectionAddress === collectionAddr;
+      return item.address === collectionAddr;
     });
     return [_collections, _metadata];
   };

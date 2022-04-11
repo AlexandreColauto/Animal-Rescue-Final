@@ -4,7 +4,17 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["Rubik"],
+        body: ["Rubik"],
+      },
+      colors: {
+        primary: "#111731",
+        secondary: "#87c7e4",
+        normal: "#708496",
+      },
+    },
   },
   plugins: [],
 };

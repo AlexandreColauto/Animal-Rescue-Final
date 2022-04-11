@@ -1,13 +1,13 @@
 import { NextPage } from "next/types";
 import React from "react";
 import Header from "./Header";
-
+import Footer from "./Footer";
 const Layout: NextPage = (props) => {
   return (
     <div>
       <Header />
-      <br></br>
-      <div className="container">{props.children}</div>
+      <div>{props.children}</div>
+      <Footer />
     </div>
   );
 };

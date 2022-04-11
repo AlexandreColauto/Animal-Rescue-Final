@@ -7,8 +7,7 @@ interface props {
   name: string;
   description?: string;
   imgUrl?: string | null;
-  setModalValue: (arg: string) => void;
-  success: () => void;
+  callback: () => void;
 }
 type create = (props: props) => Promise<boolean>;
 function useCreateCollection(): [uploadFile, create] {
@@ -18,13 +17,12 @@ function useCreateCollection(): [uploadFile, create] {
   const create: create = async (props) => {
     const ethers = Moralis.web3Library;
 
-    const { name, description, imgUrl, setModalValue, success } = props;
+    const { name, description, imgUrl, callback } = props;
 
     if (!name) {
       alert("Give a name to your collection!");
       return false;
     }
-    setModalValue("is-active");
     try {
       const s3Bucket = "kittie-kat-rescue"; // replace with your bucket name
       const objectType = "application/json"; // type of file
@@ -69,8 +67,7 @@ function useCreateCollection(): [uploadFile, create] {
         description: description,
       });
 
-      setModalValue("");
-      success();
+      callback();
       return true;
     } catch (error: any) {
       console.log(error);

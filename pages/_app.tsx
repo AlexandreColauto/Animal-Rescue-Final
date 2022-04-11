@@ -1,8 +1,10 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { MoralisProvider } from "react-moralis";
-import { useEffect } from "react";
 import Layout from "../src/components/Layout";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
   const APP_ID = process.env.NEXT_PUBLIC_APPID;
@@ -18,9 +20,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   if (isServerInfo) {
     return (
       <MoralisProvider serverUrl={SERVER_URL} appId={APP_ID}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <QueryClientProvider client={queryClient}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </QueryClientProvider>
       </MoralisProvider>
     );
   }
