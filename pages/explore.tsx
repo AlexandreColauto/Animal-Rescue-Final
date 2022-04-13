@@ -87,11 +87,13 @@ function Explore() {
     );
     setfiltered_Metadata(_metadata);
   }
+
   async function displaycollection(collection_name: string) {
     const collectionName = collection_name;
     console.log(collectionName);
     if (collectionName === "All Collections") {
       setfiltered_Metadata(metadata);
+      console.log(first)
       return;
     }
     if (!marketItms || !metadata) return;
@@ -99,9 +101,11 @@ function Explore() {
       collectionName,
       marketItms,
       metadata
-    );
+    ) ;
     setfiltered_Metadata(_metadata);
+    console.log(_metadata)
   }
+
   const getItems = async () => {
     if (!isWeb3Enabled) return;
     const answer = await fetchItems();
@@ -112,7 +116,10 @@ function Explore() {
     setMarketItms(_marketItms);
     setMetadata(_metadata);
     setfiltered_Metadata(_metadata);
+    console.log(_metadata);
+    console.log(_marketItms)
   };
+
   async function handleBuy(nftToBuy: metadata) {
     setProcessing(true);
     const callback = () => {
@@ -128,67 +135,45 @@ function Explore() {
 
   return (
     <div className="pb-16">
-      <p className="text-6xl font-bold text-center pb-14">
+      <p className="text-6xl font-bold text-center items-center pb-14">
         Explore Collections
       </p>
       <div>
         <Search />
       </div>
 
-      <div>
-        <div className="m-6 p-6 text-white bg-secondary  rounded-xl w-min md:w-[885px] min-h-[1200px]">
-          <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
-            <li className="mr-2">
+      <div className="mt-14">
+        <div className="m-6 p-6 text-white mx-auto bg-gray-200 rounded-xl w-min md:w-4/5 min-h-[1200px]">
+          <ul className="flex justify-center text-lg font-normal mt-2 text-center items-center text-gray-500 border-b-2 border-secondary">
+            <li className="mr-3">
               <button
                 className={
-                  `inline-block p-4 rounded-t-lg bg-secondary ` +
-                  (showHistory1
-                    ? 'dark:hover:bg-gray-800 dark:hover:text-gray-300  '
-                    : 'active dark:bg-gray-800 dark:text-blue-500') +
-                  (!showHistory2
-                    ? 'dark:hover:bg-gray-800 dark:hover:text-gray-300  '
-                    : 'active dark:bg-gray-800 dark:text-blue-500') +
-                  (!showHistory3
-                    ? 'dark:hover:bg-gray-800 dark:hover:text-gray-300  '
-                    : 'active dark:bg-gray-800 dark:text-blue-500')
+                  "inline-block p-4 rounded-lg hover:text-xl active:text-xl " 
                 }
-                onClick={() => { setShowHistory1(true); setShowHistory2(false); setShowHistory3(false); displaycollection("First Collection"); }}
+                onClick={() => { setShowHistory1(true); setShowHistory2(false); setShowHistory3(false); displaycollection("All Collections"); }}
               >
                 First Collection
               </button>
             </li>
-            <li className="mr-2">
+            <li className="mr-3">
               <button
-                className={
-                  `inline-block p-4 rounded-t-lg ` +
-                  (!showHistory1
-                    ? 'dark:hover:bg-gray-800 dark:hover:text-gray-300  '
-                    : 'active dark:bg-gray-800 dark:text-blue-500') +
-                  (!showHistory2
-                    ? 'dark:hover:bg-gray-800 dark:hover:text-gray-300  '
-                    : 'active dark:bg-gray-800 dark:text-blue-500') +
-                  (!showHistory3
-                    ? 'dark:hover:bg-gray-800 dark:hover:text-gray-300  '
-                    : 'active dark:bg-gray-800 dark:text-blue-500')
-                }
-                onClick={() => { setShowHistory1(false); setShowHistory2(true); setShowHistory3(false); displaycollection("Second Collection"); }}
+                className="inline-block p-4 rounded-lg hover:text-xl active:text-xl"
+                onClick={() => { setShowHistory1(false); setShowHistory2(true); setShowHistory3(false); displaycollection("all collections"); }}
               >
                 Second Collection
               </button>
             </li>
-            <li className="mr-2">
+            <li className="mr-3">
               <button
-                className="inline-block p-4 rounded-t-lg "
-                onClick={() => { setShowHistory1(false); setShowHistory2(false); setShowHistory3(true); displaycollection("First Collection"); }}
+                className="inline-block p-4 rounded-lg hover:text-xl active:text-xl"
+                onClick={() => { setShowHistory1(false); setShowHistory2(false); setShowHistory3(true); displaycollection("Thrid Collection"); }}
               >
                 Third  Collection
               </button>
             </li>
-            <li className="mr-2">
+            <li className="mr-3">
               
-                <select className={
-                  "inline-block p-4 rounded-t-lg "
-                }
+                <select className="inline-block p-4 rounded-lg hover:text-xl text-center active:text-xl"
                   
                   placeholder="All"
                   onChange={(e) => {
@@ -211,7 +196,7 @@ function Explore() {
 
       {showHistory1 ? (
         <>
-          <div className="md:flex justify-center">
+          <div className="md:flex justify-center z-10">
             <div className="px-4" style={{ maxWidth: "1600px" }}>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
                 {filtered_metadata &&
