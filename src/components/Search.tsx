@@ -5,6 +5,9 @@ import useClassifier from '../hooks/useClassifier'
 function Search() {
   const [text, setText] = useState<string>('')
   const [url, setUrl] = useState<string>('invalid')
+  const [searchResults, setSearchResults] = useState([""]);
+  const [searchTerm, setSearchTerm] = useState(); 
+  const [collections, setCollections] = useState([]);
   const isEOA = useClassifier()
 
   const searchValidation = async (e: string) => {
@@ -15,6 +18,23 @@ function Search() {
     }
     setText(e)
   }
+
+  function onChange(e: string) {
+    const collectionName = e;
+    console.log(collectionName);
+    const results: string[]= collections.filter(() => {
+      return collectionName.toUpperCase().includes(e.toUpperCase());
+    });
+    console.log(results);
+    setSearchResults(results);
+    setText(e);
+    showresults:(results: string[]);
+  }
+  function showresults(results: string[]){
+
+    return{};
+  }
+
   return (
     <>
       <div className="relative border-2 border-secondary rounded-full w-2/4 mx-auto text-gray-600 bg-white mr-auto h-10 px-5 pr-16 text-sm focus:outline-none">
@@ -24,8 +44,8 @@ function Search() {
             type="search"
             name="search"
             value={text}
-            onChange={(e) => searchValidation(e.target.value)}
-            placeholder="Paste contract address"
+            onChange={(e) => onChange(e.target.value)}
+            placeholder="Write the title of the collection"
           />
           <Link href={`/${url}/${encodeURIComponent(text)}`}>
             <button type="submit" className="absolute right-0 top-0 mt-3 mr-4">
