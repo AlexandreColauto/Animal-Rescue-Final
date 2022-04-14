@@ -58,6 +58,7 @@ const useFetchMarket = (): [fetchItems, filterNFTs] => {
       const marketItms: any = await Moralis.executeFunction(fetchItems);
       const collectionsURI = await getCollectionURI(marketItms);
       const nftsMeta = await setNFTMetadata(marketItms, collectionsURI);
+      console.log(collectionsURI, nftsMeta)
       return [marketItms, nftsMeta];
     } catch (err) {
       console.log(err);

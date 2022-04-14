@@ -49,11 +49,6 @@ function Explore() {
   const [showHistory1, setShowHistory1] = useState<boolean>(false);
   const [showHistory2, setShowHistory2] = useState<boolean>(false);
   const [showHistory3, setShowHistory3] = useState<boolean>(false);
-  const firstcollection_address =useState<string>("");
-  const secondcollection_address =useState<string>("");
-  const thirdcollection_address =useState<string>("");
-
-
 
   const buy = useBuyNFT();
   const { isLoading } = useQuery("collection", {
@@ -92,8 +87,8 @@ function Explore() {
     setfiltered_Metadata(_metadata);
   }
 
-  async function displaycollection(collection_address: any) {
-    const collectionName = collection_address;
+  async function displaycollection(collection_name: string) {
+    const collectionName = collection_name;
     console.log(collectionName);
     if (collectionName === "All Collections") {
       setfiltered_Metadata(metadata);
@@ -155,7 +150,10 @@ function Explore() {
                   "inline-block p-5 rounded-lg hover:text-xl active:text-xl "
                 }
                 onClick={() => {
-                  displaycollection(firstcollection_address);
+                  setShowHistory1(true);
+                  setShowHistory2(false);
+                  setShowHistory3(false);
+                  displaycollection("All Collections");
                 }}
               >
                 First Collection
@@ -165,7 +163,10 @@ function Explore() {
               <button
                 className="inline-block p-5 rounded-lg hover:text-xl active:text-xl"
                 onClick={() => {
-                  displaycollection(secondcollection_address);
+                  setShowHistory1(false);
+                  setShowHistory2(true);
+                  setShowHistory3(false);
+                  displaycollection("all collections");
                 }}
               >
                 Second Collection
@@ -175,7 +176,10 @@ function Explore() {
               <button
                 className="inline-block p-4 rounded-lg hover:text-xl active:text-xl"
                 onClick={() => {
-                  displaycollection(thirdcollection_address);
+                  setShowHistory1(false);
+                  setShowHistory2(false);
+                  setShowHistory3(true);
+                  displaycollection("Thrid Collection");
                 }}
               >
                 Third Collection
@@ -213,7 +217,80 @@ function Explore() {
                   </div>
                 </div>
               </div>
-          
+          {showHistory1 ? (
+            <>
+              <div className="md:flex justify-center z-10">
+                <div className="px-4" style={{ maxWidth: "1600px" }}>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+                    {filtered_metadata &&
+                      filtered_metadata.map((nft, i) => (
+                        <NFTTile
+                          key={i}
+                          nft={nft}
+                          callback={handleBuy}
+                          button="Buy"
+                        />
+                      ))}
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : showHistory2 ? (
+            <>
+              <div className="md:flex justify-center z-10">
+                <div className="px-4" style={{ maxWidth: "1600px" }}>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+                    {filtered_metadata &&
+                      filtered_metadata.map((nft, i) => (
+                        <NFTTile
+                          key={i}
+                          nft={nft}
+                          callback={handleBuy}
+                          button="Buy"
+                        />
+                      ))}
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : showHistory3 ? (
+            <>
+              <div className="md:flex justify-center z-10">
+                <div className="px-4" style={{ maxWidth: "1600px" }}>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+                    {filtered_metadata &&
+                      filtered_metadata.map((nft, i) => (
+                        <NFTTile
+                          key={i}
+                          nft={nft}
+                          callback={handleBuy}
+                          button="Buy"
+                        />
+                      ))}
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="md:flex justify-center">
+                <div className="px-4" style={{ maxWidth: "1600px" }}>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+                    {filtered_metadata &&
+                      filtered_metadata.map((nft, i) => (
+                        <NFTTile
+                          key={i}
+                          nft={nft}
+                          callback={handleBuy}
+                          button="Buy"
+                        />
+                      ))}
+                  </div>
+                </div>
+              </div>
+              )
+            </>
+          )}
 
           <Processing isOpen={processing} />
 
