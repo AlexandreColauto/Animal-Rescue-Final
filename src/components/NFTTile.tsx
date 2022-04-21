@@ -11,7 +11,7 @@ function NFTTile(props: props) {
   const { nft, callback, button } = props;
   return (
     <div>
-      <div className="border-2 mt-7 bg-secondary shadow-lg border-[#5fb5f3] rounded-xl overflow-hidden">
+      <div className="border-1 mt-7 bg-secondary shadow-lg border-gray-300 rounded-xl overflow-hidden">
         <img className="object-cover border-b-2 border-white w-60 h-60 rounded-t " src={nft.image} />
         <div className="flex flex-col justify-between">
           <div className="p-4 mx-2">
