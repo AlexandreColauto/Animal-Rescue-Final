@@ -20,6 +20,8 @@
     "aws-sdk": "^2.1105.0",
     "magic-sdk": "7.0.0",
     "moralis": "^1.5.8",
+    "multiformats": "^9.6.4",
+    "multihashes": "^4.0.3",
     "next": "12.1.4",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

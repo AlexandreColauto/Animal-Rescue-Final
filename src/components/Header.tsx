@@ -40,43 +40,44 @@ const Header: NextPage = () => {
         className="fix px-10 py-7 w-full float-right items-center"
         role="navigation"
         aria-label="main navigation"
-
       >
         <div id="general_menu" className=" float-right align-middle mb-3 ">
           <div className="text-md flex items-center lg:flex-grow">
-          <a href="/explore" className="block lg:inline-block  text-primary bg-white p-2 rounded-md mr-4 hover:drop-shadow hover:scale-105">
+            <div className="block lg:inline-block  text-primary bg-white p-2 rounded-md mr-4 hover:drop-shadow hover:scale-105">
               <Link href="/explore">
-                <p className="mx-6 font-bold cursor-pointer ">
-                  Explore
-                </p>
+                <p className="mx-6 font-bold cursor-pointer ">Explore</p>
               </Link>
-            </a>
-            <a href="/create" className="block lg:inline-block text-primary bg-white p-2 rounded-md mr-4 hover:drop-shadow hover:scale-105">
+            </div>
+            <div className="block lg:inline-block text-primary bg-white p-2 rounded-md mr-4 hover:drop-shadow hover:scale-105">
               <Link href="/create">
-                <p className="mx-6 font-bold cursor-pointer ">
-                  Create
-                </p>
+                <p className="mx-6 font-bold cursor-pointer ">Create</p>
               </Link>
-            </a>
-            <a href="#responsive-header" className="block lg:inline-block text-primary">
+            </div>
+            <div className="block lg:inline-block text-primary">
               <button
                 className="mx-6 cursor-pointer hover:drop-shadow hover:scale-105"
                 onClick={login}
               >
                 <span className="w-25">
-                  <FontAwesomeIcon icon={faWallet} className="w-8 h-8 bg-white p-2 rounded-md" />
+                  <FontAwesomeIcon
+                    icon={faWallet}
+                    className="w-8 h-8 bg-white p-2 rounded-md"
+                  />
                 </span>
               </button>
-            </a>
-            <a href="#responsive-header" className="block lg:inline-block  text-primary">
+            </div>
+            <div className="block lg:inline-block  text-primary">
               <Link href="/creatorsdashboard">
                 <div className="mx-6 cursor-pointer hover:drop-shadow hover:scale-105">
                   <span className="icon">
-                    <FontAwesomeIcon icon={faCat} className="w-8 h-8 bg-white p-2 rounded-md" />
+                    <FontAwesomeIcon
+                      icon={faCat}
+                      className="w-8 h-8 bg-white p-2 rounded-md"
+                    />
                   </span>
                 </div>
               </Link>
-            </a>
+            </div>
           </div>
         </div>
       </nav>

@@ -1,5 +1,5 @@
 import { useMoralis } from "react-moralis";
-import s3 from "../components/s3";
+import axios from "axios";
 import NFT from "../../artifacts/contracts/NFT.sol/NFT.json";
 
 type uploadFile = (e: File) => Promise<string>;
@@ -24,33 +24,19 @@ function useCreateCollection(): [uploadFile, create] {
       return false;
     }
     try {
-      const s3Bucket = "kittie-kat-rescue"; // replace with your bucket name
-      const objectType = "application/json"; // type of file
-      // try {
-      // setup params for putObject
-      const params = {
-        Bucket: s3Bucket,
-        ACL: "public-read",
-        Key: name + "/",
-      };
-      console.log(s3);
-      const result = s3.putObject(params);
-
-      console.log(result);
       const web3Provider = await Moralis.enableWeb3();
       const signer = await web3Provider.getSigner();
       const address = await Moralis.account;
-      const url =
-        "https://kittie-kat-rescue.s3.eu-west-3.amazonaws.com/" +
-        name.replace(" ", "+") +
-        "/";
-      console.log(address);
+
+      console.log(signer);
       const tokenContract = new ethers.ContractFactory(
         NFT.abi,
         NFT.bytecode,
         signer
       );
-      const nft = await tokenContract.deploy(url + "{id}.json", marketAddress);
+      console.log(marketAddress);
+      console.log(address);
+      const nft = await tokenContract.deploy(marketAddress);
       await nft.deployed();
       console.log("nft deployed to:", nft.address);
 
@@ -61,7 +47,6 @@ function useCreateCollection(): [uploadFile, create] {
       collection.save({
         name: name,
         collectionAddress: nft.address,
-        s3: url,
         owner: address,
         imgUrl: imgUrl,
         description: description,

@@ -49,11 +49,24 @@ function Explore() {
   const [showHistory1, setShowHistory1] = useState<boolean>(false);
   const [showHistory2, setShowHistory2] = useState<boolean>(false);
   const [showHistory3, setShowHistory3] = useState<boolean>(false);
-  const firstcollection_address =useState<string>("All collections");
-  const secondcollection_address =useState<string>("");
-  const thirdcollection_address =useState<string>("");
-
-
+  const [firstcollection_address, setfirstcollection_address] =
+    useState<string>(
+      process.env.NEXT_PUBLIC_FIRST_COLLECTION_ADDRESS
+        ? process.env.NEXT_PUBLIC_FIRST_COLLECTION_ADDRESS
+        : ""
+    );
+  const [secondcollection_address, setsecondcollection_address] =
+    useState<string>(
+      process.env.NEXT_PUBLIC_SECOND_COLLECTION_ADDRESS
+        ? process.env.NEXT_PUBLIC_SECOND_COLLECTION_ADDRESS
+        : ""
+    );
+  const [thirdcollection_address, setthirdcollection_address] =
+    useState<string>(
+      process.env.NEXT_PUBLIC_THIRD_COLLECTION_ADDRESS
+        ? process.env.NEXT_PUBLIC_THIRD_COLLECTION_ADDRESS
+        : ""
+    );
 
   const buy = useBuyNFT();
   const { isLoading } = useQuery("collection", {
@@ -79,7 +92,8 @@ function Explore() {
   async function picklistChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const collectionName = e.target.value;
     console.log(collectionName);
-    if (collectionName === "All Collections") {
+    if (collectionName === "All collections") {
+      console.log(metadata);
       setfiltered_Metadata(metadata);
       return;
     }
@@ -93,7 +107,7 @@ function Explore() {
     console.log(_metadata);
   }
 
-  async function displaycollection(collection_address: any) {
+  async function displaycollection(collection_address: string) {
     const collectionName = collection_address;
     console.log(collectionName);
     if (collectionName === "All Collections") {
@@ -144,7 +158,10 @@ function Explore() {
         Explore Collections
       </p>
       <div>
-        <Search />
+        <Search
+          changeCollection={displaycollection}
+          collections={collectionList}
+        />
       </div>
 
       <div className="mt-14">
@@ -200,21 +217,20 @@ function Explore() {
             </li>
           </ul>
           <div className="md:flex justify-center z-10">
-                <div className="px-4" style={{ maxWidth: "1600px" }}>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
-                    {filtered_metadata &&
-                      filtered_metadata.map((nft, i) => (
-                        <NFTTile
-                          key={i}
-                          nft={nft}
-                          callback={handleBuy}
-                          button="Buy"
-                        />
-                      ))}
-                  </div>
-                </div>
+            <div className="px-4" style={{ maxWidth: "1600px" }}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+                {filtered_metadata &&
+                  filtered_metadata.map((nft, i) => (
+                    <NFTTile
+                      key={i}
+                      nft={nft}
+                      callback={handleBuy}
+                      button="Buy"
+                    />
+                  ))}
               </div>
-          
+            </div>
+          </div>
 
           <Processing isOpen={processing} />
 

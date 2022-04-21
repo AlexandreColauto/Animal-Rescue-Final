@@ -89,7 +89,7 @@ function CreatorsDashboard() {
   return (
     <div className=" pb-24">
       {empty ? (
-        <div className="flex mx-auto justify-content-center mt-8">
+        <div className="flex w-full mx-auto justify-content-center mt-8">
           <div className="mx-auto text-center">
             <p className="text-4xl font-bold">
               {" "}
