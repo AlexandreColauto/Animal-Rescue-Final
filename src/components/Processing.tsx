@@ -60,7 +60,7 @@ export default function Processing({ isOpen }: Props) {
             </button>
             {message && (
               <p className="text-sm mt-6 text-center">
-                Check your wallet, the transaction still pending...
+                Check your wallet, if the transaction still pending...
               </p>
             )}
           </div>

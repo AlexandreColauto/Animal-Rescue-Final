@@ -43,7 +43,6 @@ const useFetchMarket = (): [fetchItems, filterNFTs] => {
   const fetchItems = async (): Promise<
     [marketItms[], metadata[]] | undefined
   > => {
-    console.log(isWeb3EnableLoading + " " + isWeb3Enabled);
     if (!isWeb3Enabled) return;
     const marketAddress = process.env.NEXT_PUBLIC_NFT_MARKET_ADDRESS;
     const userAddress = await Moralis.account;
@@ -58,7 +57,6 @@ const useFetchMarket = (): [fetchItems, filterNFTs] => {
       const marketItms: any = await Moralis.executeFunction(fetchItems);
       const collectionsURI = await getCollectionURI(marketItms);
       const nftsMeta = await setNFTMetadata(marketItms, collectionsURI);
-      console.log(collectionsURI, nftsMeta)
       return [marketItms, nftsMeta];
     } catch (err) {
       console.log(err);
@@ -72,16 +70,27 @@ const useFetchMarket = (): [fetchItems, filterNFTs] => {
   ) {
     return await Promise.all(
       nftsMeta.map(async (nft) => {
-        const nftURI = collectionsURI[nft.collectionAddress];
-        const tokenIdString = nft.tokenId.toString().padStart(64, "0");
-        const uri = nftURI?.replace("{id}", tokenIdString);
-        const _metadata = await axios.get(uri);
-        const metadata: metadata = _metadata.data;
-        metadata.id = nft.tokenId;
-        metadata.price = Moralis.Units.FromWei(nft.price);
-        metadata.marketId = parseInt(nft.itemId);
-        metadata.address = nft.collectionAddress;
-        return metadata;
+        const uri = collectionsURI[nft.collectionAddress];
+        console.log(uri);
+        try {
+          const _metadata = await axios.get(uri);
+          const metadata: metadata = _metadata.data;
+          metadata.id = nft.tokenId;
+          metadata.price = Moralis.Units.FromWei(nft.price);
+          metadata.marketId = parseInt(nft.itemId);
+          metadata.address = nft.collectionAddress;
+          return metadata;
+        } catch (error: any) {
+          console.log(error.message);
+          const dataPlaceHolder = {
+            address: nft.collectionAddress,
+            id: nft.tokenId,
+            description: "Not Available",
+            image: "/logo.png",
+            name: "Not Available",
+          };
+          return dataPlaceHolder;
+        }
       })
     );
   }
@@ -92,7 +101,6 @@ const useFetchMarket = (): [fetchItems, filterNFTs] => {
       marketItms.map(async (item) => {
         if (!CollectionURIDictionary[item.collectionAddress]) {
           const ethers = Moralis.web3Library;
-          console.log(web3);
           if (!web3) return;
           const nftContract = new ethers.Contract(
             item.collectionAddress,

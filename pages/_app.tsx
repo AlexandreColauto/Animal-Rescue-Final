@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import { MoralisProvider } from "react-moralis";
 import Layout from "../src/components/Layout";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { useState, useEffect } from "react";
 
 const queryClient = new QueryClient();
 
@@ -10,6 +11,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   const APP_ID = process.env.NEXT_PUBLIC_APPID;
   const SERVER_URL = process.env.NEXT_PUBLIC_SERVERURL;
   let isServerInfo = APP_ID && SERVER_URL ? true : false;
+  const [showChild, setShowChild] = useState(false);
+
+  useEffect(() => {
+    setShowChild(true);
+  }, []);
 
   if (!APP_ID || !SERVER_URL) {
     throw new Error(
@@ -17,6 +23,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     );
   }
 
+  if (!showChild) {
+    return null;
+  }
   if (isServerInfo) {
     return (
       <MoralisProvider serverUrl={SERVER_URL} appId={APP_ID}>
