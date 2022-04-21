@@ -23,8 +23,8 @@
     "multiformats": "^9.6.4",
     "multihashes": "^4.0.3",
     "next": "12.1.4",
-    "react": "18.0.0",
-    "react-dom": "18.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "react-moralis": "^1.3.5",
     "react-query": "^3.34.19"
   },

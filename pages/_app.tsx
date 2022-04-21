@@ -17,6 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     setShowChild(true);
   }, []);
 
+  
   if (!APP_ID || !SERVER_URL) {
     throw new Error(
       "Missing Moralis Application ID or Server URL. Make sure to set your .env file."
