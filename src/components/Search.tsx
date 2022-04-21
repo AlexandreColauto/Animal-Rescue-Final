@@ -28,7 +28,6 @@ function Search() {
     console.log(results);
     setSearchResults(results);
     setText(e);
-    showresults:(results: string[]);
   }
   function showresults(results: string[]){
 
@@ -37,7 +36,7 @@ function Search() {
 
   return (
     <>
-      <div className="relative border-2 border-secondary rounded-full w-2/4 mx-auto text-gray-600 bg-white mr-auto h-10 px-5 pr-16 text-sm focus:outline-none">
+      <div className="relative border-2 border-gray-300 rounded-full w-2/4 mx-auto text-gray-600 bg-white mr-auto h-10 px-5 pr-16 text-sm focus:outline-none">
         <form>
           <input
             className=" w-1/2 bg-white mr-auto mt-2 px-5 pr-16 text-sm focus:outline-none"

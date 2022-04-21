@@ -49,7 +49,7 @@ function Explore() {
   const [showHistory1, setShowHistory1] = useState<boolean>(false);
   const [showHistory2, setShowHistory2] = useState<boolean>(false);
   const [showHistory3, setShowHistory3] = useState<boolean>(false);
-  const firstcollection_address =useState<string>("");
+  const firstcollection_address =useState<string>("All collections");
   const secondcollection_address =useState<string>("");
   const thirdcollection_address =useState<string>("");
 
@@ -90,6 +90,7 @@ function Explore() {
       metadata
     );
     setfiltered_Metadata(_metadata);
+    console.log(_metadata);
   }
 
   async function displaycollection(collection_address: any) {
@@ -147,8 +148,8 @@ function Explore() {
       </div>
 
       <div className="mt-14">
-        <div className="m-6 p-6 text-white mx-auto bg-gray-200 rounded-xl w-min md:w-4/5 min-h-[1200px]">
-          <ul className="flex justify-center text-xl mt-2 text-center items-center text-gray-500 border-b-2 border-secondary">
+        <div className="m-6 p-6 text-white mx-auto bg-white rounded-xl w-min md:w-4/5 min-h-[1200px]">
+          <ul className="flex justify-center text-xl text-center items-center text-gray-500 border-b-2 border-gray-300">
             <li className="mr-3 mb-2">
               <button
                 className={
@@ -183,7 +184,7 @@ function Explore() {
             </li>
             <li className="mr-3">
               <select
-                className="inline-block p-4 rounded-lg hover:text-xl text-center active:text-xl"
+                className="inline-block bg-white p-4 rounded-lg hover:text-xl text-center active:text-xl"
                 placeholder="All"
                 onChange={(e) => {
                   picklistChange(e);

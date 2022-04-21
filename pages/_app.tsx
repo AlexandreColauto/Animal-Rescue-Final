@@ -11,6 +11,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const SERVER_URL = process.env.NEXT_PUBLIC_SERVERURL;
   let isServerInfo = APP_ID && SERVER_URL ? true : false;
 
+  
   if (!APP_ID || !SERVER_URL) {
     throw new Error(
       "Missing Moralis Application ID or Server URL. Make sure to set your .env file."
